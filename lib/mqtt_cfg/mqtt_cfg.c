@@ -35,6 +35,13 @@ void mqtt_handler(void *handler_argr, esp_event_base_t base, int32_t event_id, v
             cJSON_AddNumberToObject(root, "air_temperature", air_temperature);
             cJSON_AddNumberToObject(root, "air_humidity", air_humidity);
 
+            /*
+                {
+                    "air_temperature": air_temperature,
+                    "air_humidity": air_humidity
+                }
+            */
+
             char *jsonString = cJSON_PrintUnformatted(root);
 
             if (jsonString != NULL) {
@@ -82,7 +89,6 @@ void mqtt_handler(void *handler_argr, esp_event_base_t base, int32_t event_id, v
             log_error("reported from tls stack", event->error_handle->esp_tls_stack_err);
             log_error("captured as transport's socket errno",  event->error_handle->esp_transport_sock_errno);
             printf("Last errno string (%s)", strerror(event->error_handle->esp_transport_sock_errno));
-
         }
         break;
     default:
